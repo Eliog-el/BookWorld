@@ -35,7 +35,6 @@ const bookSchema = new mongoose.Schema({
   },
   productImage: {
     type: String,
-    required: true,
   },
 });
 

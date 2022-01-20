@@ -17,7 +17,13 @@ following are the schemas for the described data objects.
 
 ```javascript
 const bookSchema = Schema({
-  title: { type: String, required: true, trim: true, minlength: 5, maxlength: 255 },
+  title: {
+    type: String,
+    required: true,
+    trim: true,
+    minlength: 5,
+    maxlength: 255,
+  },
   author: { type: String, required: true, minlength: 5, maxlength: 115 },
   description: { type: String, required: true },
   genre: { type: genreSchema, required: true },
@@ -47,6 +53,10 @@ const saleSchema = Schema({
 Next, the `routes` folder contains the endpoints that are made available by the application. There is a file for each of the models. Each of the models have their corresponding GET, POST, PUT, and DELETE endpoints in their
 respective route file.
 
+The `controller` folder contains the controllers that are pointed to by the routes. They contain the CREATE, READ, UPDATE, and DELETE operations. Majority of the
+business rules are also found here. For example, the sale controller checks that the book actually exixt prior to creating
+the sales.
+
 ## Running The Application Locally
 
 Now that you have a good understanding of how this project is structured, lets talk about how you can run this on your own machine. Here are the things you will
@@ -74,15 +84,30 @@ Used to add books into the application database.
 
 Requires `title` and `author`, `description`, `genreId`, `price`, `numberInStock`, `productImage` ,in the body.
 
+Example:
+
+```json
+{
+     "title": "Javascript",
+      "description": "Awesome",
+      "author": "Paimo E",
+      "price": 45,
+      "genreId": "61e95ca39b79220935bdcd01",
+      "numberInStock": 4
+}
+```
+
 ### GET /books/:id
 
 Used to fetch a specific book using their id.
 
 Requires `id` of the user in the params.
 
+
 ### GET /books
 
 Used to get all books in the database.
+
 
 ### PUT /books/:id
 
@@ -108,6 +133,14 @@ Example:
 ### DELECT /books
 
 Used to fetch a specific book using their id and delete it.
+
+Requires `id` of the user in the params.
+
+Here form data is used in inserting the key nad the value so as to insert picture file in (`productImage`).
+
+### POST /books/:id
+
+Used to create image for a specific book using their id.
 
 Requires `id` of the user in the params.
 
@@ -144,9 +177,10 @@ Used to create a genre
 Genre is used to save the books in category
 
 Example:
+
 ```json
 {
-    "name": "Horror"
+  "name": "Horror"
 }
 ```
 
